@@ -1,29 +1,32 @@
 import socket
 
-connip = "192.168.0.101"
+connip = "192.168.0.102"
 connport = 4000
 
 c = socket.socket()
 c.connect((connip, connport))
-c.settimeout(20)
+c.settimeout(4)
 
 print("connected")
 welcome = c.recv(1024)
 print(welcome.decode())
 while True:
 	sender = input("fileshell> ")
-	#maybe we can put a if here and if its download we can put this in download mode
 	if(sender == "download"):
 		choose = input("Name the file you want to download: ")
 		newname = input("What name do you want to save it as? ")
+		#check if file exists
+		c.send("query".encode())
+		c.send(choose.encode())
+		check = c.recv(1024)
+		check = check.decode()
+		if(check == "Does not"):
+			print("The file does not exist")
+			continue
 		c.send(sender.encode())
 		c.send(choose.encode())
-		#test = c.recv(1024).decode()
-		#if(test == "no file"):
-		#	print("Error: the file does not exist")
-		#	continue
-		newfile = open(newname, "wb")
 		print("File exists! Downloading file...")
+		newfile = open(newname, "wb")
 		content = c.recv(1024)
 		while(content):
 			try:
@@ -31,7 +34,6 @@ while True:
 				content = c.recv(1024)
 			except socket.timeout:
 				newfile.close()
-				print("Done downloading")
 				break
 				continue
 			except ValueError:

@@ -40,6 +40,12 @@ while True:
 		else:
 			cool = "no file"
 			sock.send(cool.encode())
+	elif(filecommand.decode() == "query"):
+		checkfile = sock.recv(1024).decode()
+		if(os.path.exists(serverpath + "/" + checkfile)):
+			sock.send("Does".encode())
+		else:
+			sock.send("Does not".encode())	
 	elif(filecommand.decode() == "closeserver"):
 		s.close()
 		quit()
