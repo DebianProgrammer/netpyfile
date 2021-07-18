@@ -2,10 +2,17 @@ import socket
 import os
 import os.path
 
-serverpath = "/root/serv"
+# server config
+serverpath = "/root/serv" # set this to your path you want to serve
 
-myip = "192.168.0.101"
-myport = 4000
+myip = "192.168.0.101" # set this to the ip to bind
+
+myport = 4000 # set this to the port to bind
+
+authenabled = 0 # if 1, enable very basic password auth, if 0, disable auth
+
+authhash = "" # this is the md5 hash of the correct password, this is required if auth is enabled but ignored if disabled
+# end of server config
 
 s = socket.socket()
 s.bind((myip, myport))
@@ -14,6 +21,19 @@ sock, addr = s.accept()
 print(addr)
 wel = f"Welcome to {socket.gethostname()}"
 sock.send(wel.encode())
+
+if(authenabled == 1):
+	sock.send("auth is active".encode())
+	passhash = sock.recv(1024).decode()
+	if(passhash == authhash):
+		sock.send("correct".encode())
+	else:
+		sock.send("incorrect".encode())
+		s.close()
+		quit()
+else:
+	sock.send("no auth is needed".encode())
+
 while True:
 	filecommand = sock.recv(1024)
 	if(filecommand.decode() == "help"):

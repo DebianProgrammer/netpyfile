@@ -1,6 +1,7 @@
 import socket
+import hashlib
 
-connip = "192.168.0.102"
+connip = "192.168.0.101"
 connport = 4000
 
 c = socket.socket()
@@ -9,7 +10,22 @@ c.settimeout(4)
 
 print("connected")
 welcome = c.recv(1024)
+isauth = c.recv(1024).decode()
 print(welcome.decode())
+
+if(isauth == "auth is active"):
+	print(isauth)
+	sendpass = input("Enter password: ")
+	passcheck = hashlib.md5(sendpass.encode("utf-8")).hexdigest()
+	c.send(passcheck.encode())
+	check = c.recv(1024).decode()
+	if(check == "correct"):
+		print("correct password")
+	else:
+		print("incorrect password")
+		quit()
+
+
 while True:
 	sender = input("fileshell> ")
 	if(sender == "download"):
