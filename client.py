@@ -1,5 +1,6 @@
 import socket
 import hashlib
+from getpass import getpass
 
 connip = "192.168.0.101"
 connport = 4000
@@ -15,7 +16,7 @@ print(welcome.decode())
 
 if(isauth == "auth is active"):
 	print(isauth)
-	sendpass = input("Enter password: ")
+	sendpass = getpass("Enter password (will not be echoed): ")
 	passcheck = hashlib.md5(sendpass.encode("utf-8")).hexdigest()
 	c.send(passcheck.encode())
 	check = c.recv(1024).decode()
