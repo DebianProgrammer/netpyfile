@@ -1,8 +1,9 @@
 import socket
 import hashlib
+import ast
 from getpass import getpass
 
-connip = "192.168.0.101"
+connip = "192.168.0.102"
 connport = 4000
 
 c = socket.socket()
@@ -67,7 +68,7 @@ while True:
 		print(" ")
 		filelist = c.recv(4096)
 		filelist = filelist.decode()
-		filelist = eval(filelist)
+		filelist = ast.literal_eval(filelist)
 		for file in filelist:
 			print(file)
 		continue
