@@ -76,8 +76,8 @@ def newclient(sock, addr):
 
 def readsize(size):
 	for u in ["B", "KiB", "MiB", "GiB", "TiB"]:
-	if size < 1024.0:
-		break
+		if size < 1024.0:
+			break
 	size /= 1024.0
 	return f"{size:.3f}{u}"
 
