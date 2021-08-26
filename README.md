@@ -1,11 +1,13 @@
 # netpyfile
 netpyfile is a pure python 3 file transfer program
 <br>
-it allows for file transfer 2 computers
+it allows for file transfer multiple computers
 <br>
 with this, you can choose a directory to serve and configure the ip and port
 <br>
 and configure the client to connect to your server
+<br>
+<img src="./readme_stuff/1.png">
 
 # configuring and using the server
 to use the server you need to have your servers ip and the port
@@ -27,6 +29,9 @@ after you are done run the python file:
 python server.py
 ```
 ## enabling authentication (optional)
+**WARNING: This type of auth is not very secure, it should not be relied upon.**
+<br>
+<br>
 first set `authenabled` to 1 in `server.py`
 <br>
 then you need to generate a md5 hash
@@ -38,6 +43,8 @@ python passgen.py
 after running that follow the steps and you will have a md5 hash
 <br>
 put that md5 hash in string called `authhash` in `server.py`
+<br>
+<img src="./readme_stuff/2.png">
 # configuring and using the client
 to use the client, you need to have your servers ip and port
 <br>
@@ -47,6 +54,9 @@ after that, run the python file and you should be connected within a couple of s
 ```
 python client.py
 ```
+Some commands: <br>
+`list` - lists files
+<br>
+`download` opens a download interactive prompt
 ## authors
 * **DebianProgrammer** - *Initial work* - [DebianProgrammer](https://github.com/DebianProgrammer)
-
