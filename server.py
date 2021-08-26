@@ -78,7 +78,7 @@ def readsize(size):
 	for u in ["B", "KiB", "MiB", "GiB", "TiB"]:
 		if size < 1024.0:
 			break
-	size /= 1024.0
+		size /= 1024.0
 	return f"{size:.3f}{u}"
 
 s = socket.socket()
